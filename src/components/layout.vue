@@ -50,10 +50,15 @@
         </ul>
       </li>
     </ul>
+    <reportlist></reportlist>
   </div>
+
 </template>
 
 <script>
+
+import reportlist from './reportlist'
+
 export default {
   name: 'layout',
   data () {
@@ -72,6 +77,9 @@ export default {
       gutter: 0,
     });
   
+ },
+ components : {
+   'reportlist': reportlist
  }
 }
 </script>
