@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import echarts from 'echarts'
-import $ from 'jquery'
+// import $ from 'jquery'
 import VRouter from 'vue-router'
 
 import reportlist from './components/reportlist'
@@ -13,6 +13,9 @@ import divind from './components/divIndOptions'
 
 require("../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../node_modules/materialize-css/dist/js/materialize.js");
+// require("../node_modules/echarts/dist/echarts.js");
+
+Vue.prototype.$echarts = echarts 
 
 Vue.config.productionTip = false
 Vue.use(VRouter)
