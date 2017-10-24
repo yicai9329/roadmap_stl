@@ -39,6 +39,12 @@
           </div>
         </form>
       </div>
+      <button v-on:click="showreport">测试jquery加载数据</button>
+    </div>
+    <div id="chart" class="col s8">
+      <div class="col s12" id="mainarea11">
+        <div id="mainarea1"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,12 +55,134 @@ export default {
   data () {
     return {
       disOption1: 'worand',
-      disOption2: 'sea'
+      disOption2: 'sea',
+      // myChart1: null,
+      option1: {
+        legend: {
+          data: []
+        },
+        toolbox: {
+          top: 10,
+          right: 20,
+          show: true,
+          feature: {
+            saveAsImage: {
+              show: true
+            },
+            magicType: {
+              show: true,
+              type: ['line', 'bar']
+            },
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            dataZoom: {
+              show: true,
+              title: {
+                zoom: '区域缩放',
+                back: '区域缩放还原'
+              }
+            }
+          },
+
+        },
+        legend: [{
+          data: []
+        }],
+        backgroundColor: '#eeeeee',
+        grid: [{
+          left: 'center',
+          top: 'center',
+          width: '90%',
+          height: '80%'
+        }],
+        xAxis: [{
+          type: 'category',
+          data: []
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        dataZoom: [{
+          id: 'dataZoomX',
+          type: 'slider',
+          xAxisIndex: [0],
+          filterMode: 'filter',
+          bottom: 20
+        }],
+        series: []
+      }
     }
   },
   computed: {
     disOption: function () {
       return this.disOption1 + this.disOption2
+    }
+  },
+  // mounted() {
+  //    this.showreport();
+  // },
+  methods: {
+    showreport: function() {
+    // if(typeof myChart1 == "undefined"){
+    //    let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
+    // }
+    let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
+    // console.log(myChart1)
+    myChart1.setOption(this.option1);
+    jQuery.ajax({
+    type: 'GET',
+    url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+    // data: $("#reportlist").serialize(),
+    data: {graphCode: 6},
+    dataType: 'jsonp',
+    jsonp: 'callback',
+    success: function (json) {
+      console.log(jQuery("#reportlist").serialize());
+      
+      myChart1.setOption({
+        xAxis: {
+          data: json.xdata
+        }
+      });
+      if (json.legend) {
+        myChart1.setOption({
+          legend: {
+            data: json.legend
+          },
+          yAxis: [{ type: 'value' }]
+        });
+        myChart1.setOption({
+          series: (function () {
+            var ser = [];
+            for (let i = 0; i < json.ydata.length; i++) {
+              ser.push({
+                name: json.legend[i],
+                type: 'line',
+                data: json.ydata[i]
+              })
+            }
+            return ser;
+          })()
+        });
+      } else {
+        myChart1.setOption({
+          series: [{
+            name: 'one',
+            type: 'line',
+            data: json.ydata
+          }],
+          yAxis: [{ type: 'value' }]
+        })
+      }
+      // downloadChart = myChart1;
+      // console.log("the graph6 has been initialized.")
+    },
+    error: function () {
+      console.warn("经济季报数据加载失败！")
+    }
+  });
     }
   }
 }

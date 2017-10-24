@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import echarts from 'echarts'
-// import $ from 'jquery'
+import jQuery from 'jquery'
 import VRouter from 'vue-router'
 
 import reportlist from './components/reportlist'
