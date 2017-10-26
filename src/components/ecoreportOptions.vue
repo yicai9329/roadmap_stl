@@ -59,7 +59,7 @@ export default {
     return {
       disOption1: 'worand',
       disOption2: 'sea',
-      // myChart1: null,
+      myChart1: null,
       picCode: 0,
       option1: {
         legend: {
@@ -124,46 +124,50 @@ export default {
       return this.disOption1 + this.disOption2
     }
   },
-  // mounted() {
-  //    this.showreport();
-  // },
+  mounted() {
+     this.setChart();
+  },
   watch: {
     picCode: function (newCode) {
       this.showreport();
     }
   },
   methods: {
+    setChart: function() {
+      this.myChart1 = this.$echarts.init(document.getElementById('mainarea1'));
+    },
     showreport: function() {
     // if(typeof myChart1 == "undefined"){
     //    let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
     // }
-    let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
+    // let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
     // console.log(jQuery("#reportlist").serialize())
-    myChart1.setOption(this.option1, true);
+    this.myChart1.setOption(this.option1, true);
+    let self = this; 
     jQuery.ajax({
     type: 'GET',
     url: 'http://localhost:8080/BIMPlus/seasonReport.json',
     // data: jQuery("#reportlist").serialize(),
     // data: {graphCode: 6},
-    data: {graphCode: this.picCode},
+    data: {graphCode: self.picCode},
     dataType: 'jsonp',
     jsonp: 'callback',
     success: function (json) {
       console.log(jQuery("#reportlist").serialize());
       
-      myChart1.setOption({
+      self.myChart1.setOption({
         xAxis: {
           data: json.xdata
         }
       });
       if (json.legend) {
-        myChart1.setOption({
+        self.myChart1.setOption({
           legend: {
             data: json.legend
           },
           yAxis: [{ type: 'value' }]
         });
-        myChart1.setOption({
+        self.myChart1.setOption({
           series: (function () {
             var ser = [];
             for (let i = 0; i < json.ydata.length; i++) {
@@ -177,7 +181,7 @@ export default {
           })()
         });
       } else {
-        myChart1.setOption({
+        self.myChart1.setOption({
           series: [{
             name: 'one',
             type: 'line',

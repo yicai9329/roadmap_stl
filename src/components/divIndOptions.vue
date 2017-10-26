@@ -36,85 +36,91 @@ export default {
   name: 'divind',
   data () {
   return {
-  option:  { title: {
-    text: '圆圈大小代表工业产值大小',
-    left: 'center'
-  },
-  legend: {
-    right: 10,
-    data: []
-  },
-  backgroundColor: '#eeeeee',
-  toolbox: {
-    top: 70,
-    right: 40,
-    orient: 'vertical',
-    show: true,
-    feature: {
-      saveAsImage: {
-        show: true
+    myChart: null,
+    switchtype: 0,
+    yearList: [],
+    indlist: [],
+    divlist: [],
+    curyear: new Date().getFullYear(),
+    option:  { title: {
+      text: '圆圈大小代表工业产值大小',
+      left: 'center'
+    },
+    legend: {
+      right: 10,
+      data: []
+    },
+    backgroundColor: '#eeeeee',
+    toolbox: {
+      top: 70,
+      right: 40,
+      orient: 'vertical',
+      show: true,
+      feature: {
+        saveAsImage: {
+          show: true
+        }
       }
-    }
-  },
-  tooltip: {
-    trigger: 'item',
-    triggerOn: 'mousemove',
-    hideDelay: 100,
-    formatter: function (data) {
-      return data.value[3] + '</br>' + data.value[4] + '</br>' + data.value[5]
     },
-  },
-  grid: {
-    left: 72,
-    top: 'center',
-    width: '85%',
-    height: '85%'
-  },
-  xAxis: {
-    name: '销售利润率(%)',
-    nameGap: 10,
-    nameTextStyle: {
-      width: 15
+    tooltip: {
+      trigger: 'item',
+      triggerOn: 'mousemove',
+      hideDelay: 100,
+      formatter: function (data) {
+        return data.value[3] + '</br>' + data.value[4] + '</br>' + data.value[5]
+      },
     },
-    type: 'value',
-    min: 0,
-    data: []
-  },
-  yAxis: {
-    name: '全员劳动生产率(万元/人年)',
-    nameTextStyle: {
-      width: 15
+    grid: {
+      left: 72,
+      top: 'center',
+      width: '85%',
+      height: '85%'
     },
-    type: 'value'
-  },
-  dataZoom: [{
-    id: 'dataZoomX',
-    type: 'slider',
-    xAxisIndex: [0],
-    filterMode: 'empty',
-    bottom: 20
-  }, {
-    id: 'dataZoomY',
-    type: 'slider',
-    yAxisIndex: [0],
-    filterMode: 'empty'
-  }],
-  series: []
-}
-    }
-  },
-  methods: {
-    initBase() {
-      let myChart = this.$echarts.init(document.getElementById('mainarea'))
-
-      myChart.setOption(this.option)
-    }
-
-  },
-  mounted() {
-    this.initBase();
+    xAxis: {
+      name: '销售利润率(%)',
+      nameGap: 10,
+      nameTextStyle: {
+        width: 15
+      },
+      type: 'value',
+      min: 0,
+      data: []
+    },
+    yAxis: {
+      name: '全员劳动生产率(万元/人年)',
+      nameTextStyle: {
+        width: 15
+      },
+      type: 'value'
+    },
+    dataZoom: [{
+      id: 'dataZoomX',
+      type: 'slider',
+      xAxisIndex: [0],
+      filterMode: 'empty',
+      bottom: 20
+    }, {
+      id: 'dataZoomY',
+      type: 'slider',
+      yAxisIndex: [0],
+      filterMode: 'empty'
+    }],
+    series: []
   }
-  
+}
+},
+methods: {
+  setChart() {
+    this.myChart = this.$echarts.init(document.getElementById('mainarea'))
+
+    this.myChart.setOption(this.option)
+  }
+
+},
+mounted() {
+  this.setChart();
+}
+
 }
 </script>
 

@@ -10,6 +10,7 @@ import reportlist from './components/reportlist'
 import ecoreportOptions from './components/ecoreportOptions'
 import ecoglobal from './components/ecoglobalOptions'
 import divind from './components/divIndOptions'
+import stlcompany from './components/stlCompany'
 
 require("../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../node_modules/materialize-css/dist/js/materialize.js");
@@ -27,22 +28,26 @@ let router = new VRouter({
 	   	path: '/',
 	   	redirect: '/ecoreport'
 	   },
-       {
-       	path: '/reportToBeDownloaded',
-       	component: reportlist
-       },
-       {
-       	path: '/ecoreport',
-       	component: ecoreportOptions
-       },
-       {
-       	path: '/ecoglobal',
-       	component: ecoglobal
-       },
-       {
-       	path: '/divInd',
-       	component: divind
-       }
+     {
+     	path: '/reportToBeDownloaded',
+     	component: reportlist
+     },
+     {
+     	path: '/ecoreport',
+     	component: ecoreportOptions
+     },
+     {
+     	path: '/ecoglobal',
+     	component: ecoglobal
+     },
+     {
+     	path: '/divInd',
+     	component: divind
+     },
+     {
+      path: '/stlCompnay',
+      component: stlcompany
+     }
 	]
 })
 

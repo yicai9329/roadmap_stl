@@ -39,7 +39,7 @@
       <li class="divider"></li>
       <li><a href="#!">企业信息</a>
         <ul class="dropdown3">
-          <li><a href="#!">钢厂基本信息显示与查询</a></li>
+          <router-link :to="{path:'stlCompnay'}" tag="li"><a>钢厂基本信息显示与查询</a></router-link>
           <li><a href="#!">技术经济+系统优化+总图</a></li>
           <li><a href="#!">钢厂竞争力排名</a></li>
           <li><a href="#!">钢厂信息对比</a></li>

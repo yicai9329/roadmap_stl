@@ -34,7 +34,7 @@
             <td>20170915</td>
             <td>20170920</td>
             <td></td>
-            <td><a id="download11" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            <td><a id="download12" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
           <tr>
             <td>3</td>
@@ -45,7 +45,7 @@
             <td>20170915</td>
             <td>20170920</td>
             <td></td>
-            <td><a id="download11" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            <td><a id="download13" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
           <tr>
             <td>4</td>
@@ -56,7 +56,7 @@
             <td>20170915</td>
             <td>20170920</td>
             <td></td>
-            <td><a id="download11" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            <td><a id="download14" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
         </tbody>
       </table>
