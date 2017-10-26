@@ -8,38 +8,38 @@
           <input type="radio" name="moh" class="filled-in" id="month" value='mon' v-model='disOption2' /><label for="month">月度</label></p>
         <form id="reportlist">
           <div id="worandsea" v-if="disOption === 'worandsea'">
-            <input type="radio" name="graphCode" value="1" id="table1" /><label for="table1">全球主要经济体GDP增速</label>
-            <input type="radio" name="graphCode" value="3" id="table2" /><label for="table2">全球主要经济体贸易出口增速</label>
+            <input type="radio" name="graphCode" value="1" id="table1" v-model="picCode"/><label for="table1">全球主要经济体GDP增速</label>
+            <input type="radio" name="graphCode" value="3" id="table2" v-model="picCode"/><label for="table2">全球主要经济体贸易出口增速</label>
           </div>
           <div id="worandmon" v-else-if="disOption === 'worandmon'">
-            <input type="radio" name="graphCode" value="2" id="table3" /><label for="table3">全球主要经济体PMI指数</label>
-            <input type="radio" name="graphCode" value="4" id="table4" /><label for="table4">全球主要经济体贸易帐</label>
-            <input type="radio" name="graphCode" value="5" id="table5" /><label for="table5">全球主要经济体汇率</label>
+            <input type="radio" name="graphCode" value="2" id="table3" v-model="picCode"/><label for="table3">全球主要经济体PMI指数</label>
+            <input type="radio" name="graphCode" value="4" id="table4" v-model="picCode"/><label for="table4">全球主要经济体贸易帐</label>
+            <input type="radio" name="graphCode" value="5" id="table5" v-model="picCode"/><label for="table5">全球主要经济体汇率</label>
           </div>
           <div id="couandsea" v-else-if="disOption ==='couandsea'">
-            <input type="radio" name="graphCode" value="6" id="table6" /><label for="table6">国内GDP季度增速</label>
+            <input type="radio" name="graphCode" value="6" id="table6" v-model="picCode"/><label for="table6">国内GDP季度增速</label>
           </div>
           <div id="couandmon" v-else-if="disOption === 'couandmon'">
-            <input type="radio" name="graphCode" value="7" id="table7" /><label for="table7">国内PPI和CPI指数</label>
-            <input type="radio" name="graphCode" value="8" id="table8" /><label for="table8">国内PMI指数</label>
-            <input type="radio" name="graphCode" value="9" id="table9" /><label for="table9">国内社会消费品零售总额</label>
-            <input type="radio" name="graphCode" value="10" id="table10" /><label for="table10">国内固定资产投资</label>
-            <input type="radio" name="graphCode" value="11" id="table11" /><label for="table11">房地产投资增速与房价指数</label>
-            <input type="radio" name="graphCode" value="12" id="table12" /><label for="table12">国内进出口额</label>
-            <input type="radio" name="graphCode" value="13" id="table13" /><label for="table13">国内财政收入增速</label>
-            <input type="radio" name="graphCode" value="14" id="table14" /><label for="table14">国内地方债发行成本</label>
-            <input type="radio" name="graphCode" value="15" id="table15" /><label for="table15">国内货币投放量</label>
-            <input type="radio" name="graphCode" value="16" id="table16" /><label for="table16">国内市场利率</label>
-            <input type="radio" name="graphCode" value="17" id="table17" /><label for="table17">大宗商品价格指数</label>
-            <input type="radio" name="graphCode" value="18" id="table18" /><label for="table18">制造业分行业工业增加值增速</label>
-            <input type="radio" name="graphCode" value="19" id="table19" /><label for="table19">制造业分行业固定资产投资增速</label>
+            <input type="radio" name="graphCode" value="7" id="table7" v-model="picCode"/><label for="table7">国内PPI和CPI指数</label>
+            <input type="radio" name="graphCode" value="8" id="table8" v-model="picCode"/><label for="table8">国内PMI指数</label>
+            <input type="radio" name="graphCode" value="9" id="table9" v-model="picCode"/><label for="table9">国内社会消费品零售总额</label>
+            <input type="radio" name="graphCode" value="10" id="table10" v-model="picCode"/><label for="table10">国内固定资产投资</label>
+            <input type="radio" name="graphCode" value="11" id="table11" v-model="picCode"/><label for="table11">房地产投资增速与房价指数</label>
+            <input type="radio" name="graphCode" value="12" id="table12" v-model="picCode"/><label for="table12">国内进出口额</label>
+            <input type="radio" name="graphCode" value="13" id="table13" v-model="picCode"/><label for="table13">国内财政收入增速</label>
+            <input type="radio" name="graphCode" value="14" id="table14" v-model="picCode"/><label for="table14">国内地方债发行成本</label>
+            <input type="radio" name="graphCode" value="15" id="table15" v-model="picCode"/><label for="table15">国内货币投放量</label>
+            <input type="radio" name="graphCode" value="16" id="table16" v-model="picCode"/><label for="table16">国内市场利率</label>
+            <input type="radio" name="graphCode" value="17" id="table17" v-model="picCode"/><label for="table17">大宗商品价格指数</label>
+            <input type="radio" name="graphCode" value="18" id="table18" v-model="picCode"/><label for="table18">制造业分行业工业增加值增速</label>
+            <input type="radio" name="graphCode" value="19" id="table19" v-model="picCode"/><label for="table19">制造业分行业固定资产投资增速</label>
           </div>
           <div id="errorOption" v-else>
             I should not appear, you made a wrong choice.
           </div>
         </form>
       </div>
-      <button v-on:click="showreport">测试jquery加载数据</button>
+      <button v-on:click="showreport" v-show="">测试jquery加载数据</button>
     </div>
     <div id="chart" class="col s8">
       <div class="col s12" id="mainarea11">
@@ -50,6 +50,9 @@
 </template>
 
 <script>
+// jQuery("#reportlist").change(function () {
+//   this.showreport();
+// });
 export default {
   name: 'ecoreportOptions',
   data () {
@@ -57,6 +60,7 @@ export default {
       disOption1: 'worand',
       disOption2: 'sea',
       // myChart1: null,
+      picCode: 0,
       option1: {
         legend: {
           data: []
@@ -123,19 +127,25 @@ export default {
   // mounted() {
   //    this.showreport();
   // },
+  watch: {
+    picCode: function (newCode) {
+      this.showreport();
+    }
+  },
   methods: {
     showreport: function() {
     // if(typeof myChart1 == "undefined"){
     //    let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
     // }
     let myChart1 = this.$echarts.init(document.getElementById('mainarea1'))
-    // console.log(myChart1)
-    myChart1.setOption(this.option1);
+    // console.log(jQuery("#reportlist").serialize())
+    myChart1.setOption(this.option1, true);
     jQuery.ajax({
     type: 'GET',
     url: 'http://localhost:8080/BIMPlus/seasonReport.json',
-    // data: $("#reportlist").serialize(),
-    data: {graphCode: 6},
+    // data: jQuery("#reportlist").serialize(),
+    // data: {graphCode: 6},
+    data: {graphCode: this.picCode},
     dataType: 'jsonp',
     jsonp: 'callback',
     success: function (json) {
