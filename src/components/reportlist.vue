@@ -1,15 +1,21 @@
 <template>
 <div id="downReport">
-    <table class="striped bordered">
+    <div class="row">
+      <div class="col s2 offset-s10">
+        <br/>
+        <router-link :to="{path:'newReport'}"  class="waves-effect waves-light btn">创建报告</router-link>
+      </div>
+    </div>
+      <table class="striped bordered">
         <thead>
           <tr>
-              <th>序号</th>
-              <th>类别</th>
-              <th>报告年月</th>
-              <th>报告主题</th>
-              <th>状态</th>
-              <th>创建日期</th>
-              <th>提交日期</th>
+            <th>序号</th>
+            <th>类别</th>
+            <th>报告年月</th>
+            <th>报告主题</th>
+            <th>状态</th>
+            <th>创建日期</th>
+            <th>提交日期</th>
           </tr>
         </thead>
 
@@ -58,8 +64,22 @@
             <td></td>
             <td><a id="download14" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
+          <template v-for="item in items">
+            <tr  v-bind:key="item.key">
+              <td>{{item.key}}</td>
+              <td>{{item.category}}</td>
+              <td>{{item.yearandmonth}}</td>
+              <td>{{item.theme}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.createdate}}</td>
+              <td>{{item.submitdate}}</td>
+              <td></td>
+              <td><a id="download14" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            </tr>
+          </template>
         </tbody>
       </table>
+    <div id=""
     <ul class="pagination">
       <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
       <li class="active"><a href="#!">1</a></li>
@@ -77,8 +97,40 @@ export default {
   name: 'reportlist',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      items: [
+        {
+          key: 9,
+          yearandmonth: "20171031",
+          category: "月报",
+          theme: "宏观经济研究月报2017年第12期",
+          status: "提交",
+          createdate: "20171027",
+          submitdate: "20171030",
+        }
+      ]
     }
+  },
+  methods: {
+     reloadList : function () {
+       let self = this;
+       jQuery.ajax({
+         type: 'GET',
+         url: 'http://localhost:8080/BIMPlus/reportListReload.json',
+         dataType: 'jsonp',
+         jsonp: 'callback',
+         success: function (json) {
+           self.items = json;
+         },
+         error: function () {
+          console.warn("重载报告列表失败")
+        }
+      });
+     }
+   },
+  mounted () {
+    this.$nextTick (function () {
+    
+  })
   }
 }
 </script>
