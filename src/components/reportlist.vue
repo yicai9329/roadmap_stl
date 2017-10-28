@@ -129,7 +129,7 @@ export default {
    },
   mounted () {
     this.$nextTick (function () {
-    
+      this.reloadList();
   })
   }
 }
