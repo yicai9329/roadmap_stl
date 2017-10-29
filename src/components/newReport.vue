@@ -3,7 +3,7 @@
 	<br/>
 	<div class="row">
 		<div class="col s2 push-s10">
-			<a class="waves-effect waves-light btn">保存</a>
+			<a class="waves-effect waves-light btn" v-on:click="saveNewReport">保存</a>
 		</div>
 		<div class="col s2 push-s7">
 			<a class="waves-effect waves-light btn">提交</a>
@@ -106,6 +106,7 @@
 				text5: "",
 				text6: "",
 				text7: "",
+				nextReportID: 9,
 				option1: {
 					legend: {
 						data: []
@@ -167,6 +168,21 @@
 	methods: {
 		setChart: function() {
 			this.myChart1 = this.$echarts.init(document.getElementById('mainarea111'));
+		},
+		saveNewReport: function() {
+			let self = this
+			jQuery.ajax({
+				type: 'POST',
+				url: 'http://localhost:8080/BIMPlus/newReportSave.json',
+				data: {nextID: self.nextReportID, text0: self.text0, text2: self.text2, text5: self.text5, text6: self.text6, text7: self.text7},
+				success: function () {
+					console.log("The " + self.nextReportID + " th " + " has been saved.");
+				},
+				error: function () {
+					console.warn("重载报告列表失败")
+				}
+			});
+			self.nextReportID += 1;
 		},
 		showreport: function(picCode) {
 		this.myChart1.setOption(this.option1, true);
