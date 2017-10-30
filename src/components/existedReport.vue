@@ -3,7 +3,7 @@
 	<br/>
 	<div class="row">
 		<div class="col s2 push-s10">
-			<a class="waves-effect waves-light btn" v-on:click="saveNewReport">保存</a>
+			<a class="waves-effect waves-light btn" v-on:click="updateReport">保存</a>
 		</div>
 		<div class="col s2 push-s7">
 			<a class="waves-effect waves-light btn">提交</a>
@@ -43,7 +43,7 @@
 		<div class="col s8">
 			<div class="row">
 				<div id="titleOfGraph" class="col s12 white">
-					<span class="flow-text">国内PPI和CPI指数</span>
+					<span class="flow-text">图表主题</span>
 				</div>
 
 				<div id="chart1" class="col s8">
@@ -87,7 +87,8 @@
 
 <script>
 	export default {
-		name: 'newreport',
+		name: 'existedReport',
+        props: ['report_id'],
 		watch: {
 			picCode: function (newCode, oldCode) {
 				if(newCode != 100) {
@@ -106,7 +107,6 @@
 				text5: "",
 				text6: "",
 				text7: "",
-				nextReportID: 9,
 				option1: {
 					legend: {
 						data: []
@@ -169,20 +169,51 @@
 		setChart: function() {
 			this.myChart1 = this.$echarts.init(document.getElementById('mainarea111'));
 		},
-		saveNewReport: function() {
+		updateReport: function() {
 			let self = this
 			jQuery.ajax({
 				type: 'POST',
-				url: 'http://localhost:8080/BIMPlus/newReportSave.json',
-				data: {nextID: self.nextReportID, text0: self.text0, text2: self.text2, text5: self.text5, text6: self.text6, text7: self.text7},
+				url: 'http://localhost:8080/BIMPlus/updateReport.json',
+				data: {update_id: self.report_id, text0: self.text0, text2: self.text2, text5: self.text5, text6: self.text6, text7: self.text7},
 				success: function () {
-					console.log("The " + self.nextReportID + " th " + " has been saved.");
+					console.log("The " + self.report_id + " th " + " has been saved.");
 				},
 				error: function () {
-					console.warn("重载报告列表失败")
+					console.warn("编辑报告保存失败.")
 				}
 			});
-			self.nextReportID += 1;
+		},
+		initReport: function(report_id) {
+			let self = this
+			jQuery.ajax({
+				type: 'GET',
+				url: 'http://localhost:8080/BIMPlus/initExistedReport.json',
+				data: {report_id: report_id},
+				dataType: 'jsonp',
+                jsonp: 'callback',
+				success: function(json) {
+                    for(let i=0; i<json.length; i++) {
+                    	if( json[i]["reportnumber"] == 0 ) {
+                    		self.text0 = json[i]["text"]
+                    	} else if( json[i]["reportnumber"] == 1 ) {
+                    		self.text2 = json[i]["text"]
+                    	} else if( json[i]["reportnumber"] == 2 ) {
+                    		self.text5 = json[i]["text"]
+                    	} else if( json[i]["reportnumber"] == 3 ) {
+                    		self.text6 = json[i]["text"]
+                    	} else if( json[i]["reportnumber"] == 4 ) {
+                    		self.text7 = json[i]["text"]
+                    	} else {
+                    		console.warn( "This one should not appear " + json[i])
+                    	}
+                    }
+                    console.log("report fetched successfully.")
+                    console.log(json)
+				},
+				error: function () {
+					console.warn("初始化要编辑的报告失败.")
+				}
+			});
 		},
 		showreport: function(picCode) {
 		this.myChart1.setOption(this.option1, true);
@@ -249,6 +280,7 @@ mounted () {
 			jQuery('input#input_text, textarea#textarea0, textarea#textarea2, textarea#textarea5, textarea#textarea6, textarea#textarea7').characterCounter();
 		});
 		this.setChart();
+		this.initReport(this.report_id);
 	})
 } 
 }

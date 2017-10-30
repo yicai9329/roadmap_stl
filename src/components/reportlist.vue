@@ -65,7 +65,7 @@
             <td><a id="download14" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
           <template v-for="item in items">
-            <tr  v-bind:key="item.key">
+            <tr v-bind:key="item.key">
               <td>{{item.key}}</td>
               <td>{{item.category}}</td>
               <td>{{item.yearandmonth}}</td>
@@ -74,7 +74,7 @@
               <td>{{item.createdate}}</td>
               <td>{{item.submitdate}}</td>
               <td></td>
-              <td><a id="download14" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+              <td><a id="download14" class="waves-effect waves-light btn">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
             </tr>
           </template>
         </tbody>
