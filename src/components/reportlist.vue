@@ -1,11 +1,12 @@
 <template>
-<div id="downReport">
+  <div id="downReport">
     <div class="row">
       <div class="col s2 offset-s10">
         <br/>
         <router-link :to="{path:'newReport'}"  class="waves-effect waves-light btn">创建报告</router-link>
       </div>
     </div>
+    <div class="col s10" id="reportTable">
       <table class="striped bordered">
         <thead>
           <tr>
@@ -51,7 +52,7 @@
             <td>20170915</td>
             <td>20170920</td>
             <td></td>
-            <td><a id="download13" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            <td><a id="download13" class="waves-effect waves-light btn" v-on:click="trialDown">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
           <tr>
             <td>4</td>
@@ -74,21 +75,27 @@
               <td>{{item.createdate}}</td>
               <td>{{item.submitdate}}</td>
               <td></td>
-              <td><a id="download14" class="waves-effect waves-light btn">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
+              <td><a id="download14" class="waves-effect waves-light btn" v-on:click="downloadReport(item.key)">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
             </tr>
           </template>
         </tbody>
       </table>
-    <div id=""
-    <ul class="pagination">
-      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-      <li class="active"><a href="#!">1</a></li>
-      <li class="waves-effect"><a href="#!">2</a></li>
-      <li class="waves-effect"><a href="#!">3</a></li>
-      <li class="waves-effect"><a href="#!">4</a></li>
-      <li class="waves-effect"><a href="#!">5</a></li>
-      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-    </ul>
+      <ul class="pagination">
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#!">1</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+
+    <div class="col s8" id="chartArea">
+      <div class="col s12" id="mainarea11">
+        <div id="mainarea111"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -107,7 +114,66 @@ export default {
           createdate: "20171027",
           submitdate: "20171030",
         }
-      ]
+      ],
+      collectedPicCode: [],
+      myChart1: null,
+      option1: {
+        legend: {
+          data: []
+        },
+        toolbox: {
+          top: 10,
+          right: 20,
+          show: true,
+          feature: {
+            saveAsImage: {
+              show: true
+            },
+            magicType: {
+              show: true,
+              type: ['line', 'bar']
+            },
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            dataZoom: {
+              show: true,
+              title: {
+                zoom: '区域缩放',
+                back: '区域缩放还原'
+              }
+            }
+          },
+
+        },
+        legend: [{
+          data: []
+        }],
+        backgroundColor: '#eeeeee',
+        grid: [{
+          left: 'center',
+          top: 'center',
+          width: '90%',
+          height: '80%'
+        }],
+        xAxis: [{
+          type: 'category',
+          data: []
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        dataZoom: [{
+          id: 'dataZoomX',
+          type: 'slider',
+          xAxisIndex: [0],
+          filterMode: 'filter',
+          bottom: 20
+        }],
+        series: []
+      },
+      picList: [2,5,6,7]
     }
   },
   methods: {
@@ -125,11 +191,109 @@ export default {
           console.warn("重载报告列表失败")
         }
       });
-     }
+     },
+     setChart: function() {
+      this.myChart1 = this.$echarts.init(document.getElementById('mainarea111'));
+    },
+     postReport: function (reportID) {
+      console.log("We are downloading report " + reportID);
+      // console.log(this.collectedPicCode);
+      jQuery.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/BIMPlus/downloadReport.docx',
+        data: {reportID: reportID, picsCode: JSON.stringify(this.collectedPicCode)},
+        success: function() {
+          console.log("Successfully post the images info code to the backend")
+        },
+        error: function() {
+          console.warn("POSTING THE IMAGES CODE TO THE BACKEND FAILED.")
+        }
+      });
+     },
+     trialDown: function () {
+      window.open("E:/GIS/workspace/BIMPlus/build/inplaceWebapp/outReport.docx");
+     },
+     downloadReport: function(reportID){
+      if(this.picList.length === 4) {
+        let self = this
+       jQuery.when(this.showreport(this.picList[0]), this.showreport(this.picList[1]), this.showreport(this.picList[2]), this.showreport(this.picList[3]))
+       .done(
+         function () {
+         console.log("The dataURL has been collected.")
+         self.postReport(reportID)
+         window.open("E:/GIS/workspace/BIMPlus/build/inplaceWebapp/outReport.docx");
+         collectedPicCode.splice(0, collectedPicCode.length)
+       })
+       .fail(function () {
+        console.warn("The collection of dataURL fails.")
+       })
+      } else {
+        console.warn("The length of the picList is wrong(should be 4)")
+      }
+     },
+     showreport: function(picCode) {
+      this.myChart1.setOption(this.option1, true);
+      let self = this; 
+    return  jQuery.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+    // data: jQuery("#reportlist").serialize(),
+    // data: {graphCode: 6},
+    data: {graphCode: picCode},
+    dataType: 'jsonp',
+    jsonp: 'callback',
+    success: function (json) {
+    // console.log(jQuery("#reportlist").serialize());
+
+    self.myChart1.setOption({
+      xAxis: {
+        data: json.xdata
+      },
+      animation: false
+    });
+    if (json.legend) {
+      self.myChart1.setOption({
+        legend: {
+          data: json.legend
+        },
+        yAxis: [{ type: 'value' }]
+      });
+      self.myChart1.setOption({
+        series: (function () {
+          var ser = [];
+          for (let i = 0; i < json.ydata.length; i++) {
+            ser.push({
+              name: json.legend[i],
+              type: 'line',
+              data: json.ydata[i]
+            })
+          }
+          return ser;
+        })()
+      });
+    } else {
+      self.myChart1.setOption({
+        series: [{
+          name: 'one',
+          type: 'line',
+          data: json.ydata
+        }],
+        yAxis: [{ type: 'value' }]
+      })
+    }
+      self.collectedPicCode.push(self.myChart1.getDataURL());
+      console.log("The " + picCode + " th has been collected.")
+    },
+    error: function () {
+      console.warn("经济季报数据加载失败！")
+    }
+  });
+    }
    },
   mounted () {
     this.$nextTick (function () {
       this.reloadList();
+      this.setChart();
   })
   }
 }
@@ -137,5 +301,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+   #mainarea111 {
+    margin-top:5px;
+    height: 650px;
+    width: 500px;
+  }
 </style>
