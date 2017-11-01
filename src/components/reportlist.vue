@@ -52,7 +52,7 @@
             <td>20170915</td>
             <td>20170920</td>
             <td></td>
-            <td><a id="download13" class="waves-effect waves-light btn" v-on:click="trialDown">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
+            <td><a id="download13" class="waves-effect waves-light btn">下载</a> <a class="waves-effect waves-light btn">编辑</a></td>
           </tr>
           <tr>
             <td>4</td>
@@ -258,16 +258,16 @@ export default {
         this.showreport(this.picList[0])
         .then(function () {
           // self.myChart1.clear();
-          self.showreport(self.picList[1])
+          return self.showreport(self.picList[1])
            }
         )
         .then(function () {
           // self.myChart1.clear();
-          self.showreport(self.picList[2])
+          return self.showreport(self.picList[2])
            })
         .then(function () {
           // self.myChart1.clear();
-          self.showreport(self.picList[3])
+          return self.showreport(self.picList[3])
            }) 
         .then(
            function () {
@@ -290,7 +290,7 @@ export default {
       }
      },
      showreport: function(picCode) {
-      // this.myChart1.clear();
+      this.myChart1.clear();
       // debugger
       this.myChart1.setOption(this.option1, true);
       let self = this; 
