@@ -75,7 +75,7 @@
               <td>{{item.createdate}}</td>
               <td>{{item.submitdate}}</td>
               <td></td>
-              <td><a id="download14" class="waves-effect waves-light btn" v-on:click="downloadReport(item.key)">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
+              <td><a id="download14" class="waves-effect waves-light btn" v-on:click="downloadReportSeq(item.key)">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
             </tr>
           </template>
         </tbody>
@@ -176,6 +176,11 @@ export default {
       picList: [2,5,6,7]
     }
   },
+  // watch: {
+  //   collectedPicCode: function () {
+  //     this.myChart1.clear();
+  //   }
+  // },
   methods: {
      reloadList : function () {
        let self = this;
@@ -198,40 +203,95 @@ export default {
      postReport: function (reportID) {
       console.log("We are downloading report " + reportID);
       // console.log(this.collectedPicCode);
-      jQuery.ajax({
+      return jQuery.ajax({
         type: 'POST',
         url: 'http://localhost:8080/BIMPlus/downloadReport.docx',
         data: {reportID: reportID, picsCode: JSON.stringify(this.collectedPicCode)},
         success: function() {
           console.log("Successfully post the images info code to the backend")
+          // self.collectedPicCode.splice(0, self.collectedPicCode.length)
         },
         error: function() {
           console.warn("POSTING THE IMAGES CODE TO THE BACKEND FAILED.")
+        },
+        complete: function() {
+          console.log("post report complete function.")
+          // self.collectedPicCode.splice(0, self.collectedPicCode.length)
         }
       });
      },
      trialDown: function () {
-      window.open("E:/GIS/workspace/BIMPlus/build/inplaceWebapp/outReport.docx");
+      // debugger
+      // window.open("E:/GIS/workspace/BIMPlus/build/inplaceWebapp/outReport.docx");
+      window.open("http://localhost:8080/BIMPlus/outReport.docx");
      },
      downloadReport: function(reportID){
       if(this.picList.length === 4) {
         let self = this
        jQuery.when(this.showreport(this.picList[0]), this.showreport(this.picList[1]), this.showreport(this.picList[2]), this.showreport(this.picList[3]))
-       .done(
+       .then(
          function () {
          console.log("The dataURL has been collected.")
-         self.postReport(reportID)
-         window.open("E:/GIS/workspace/BIMPlus/build/inplaceWebapp/outReport.docx");
-         collectedPicCode.splice(0, collectedPicCode.length)
+         return self.postReport(reportID)
+         
+         // self.collectedPicCode.splice(0, self.collectedPicCode.length)
        })
-       .fail(function () {
-        console.warn("The collection of dataURL fails.")
+       .then(function () {
+          window.open("http://localhost:8080/BIMPlus/outReport.docx");
+          self.collectedPicCode.splice(0, self.collectedPicCode.length)
+          console.log("The downloading of the report succeed!")
        })
+       // .done(function () {
+       //  console.log("The downloading of the report succeeded.")
+       // })
+       // .fail(function () {
+       //  console.warn("The collection of dataURL fails.")
+       // })
       } else {
         console.warn("The length of the picList is wrong(should be 4)")
       }
      },
+     downloadReportSeq: function(reportID) {
+      if(this.picList.length === 4) {
+        let self = this;
+        // this.myChart1.clear();
+        this.showreport(this.picList[0])
+        .then(function () {
+          // self.myChart1.clear();
+          self.showreport(self.picList[1])
+           }
+        )
+        .then(function () {
+          // self.myChart1.clear();
+          self.showreport(self.picList[2])
+           })
+        .then(function () {
+          // self.myChart1.clear();
+          self.showreport(self.picList[3])
+           }) 
+        .then(
+           function () {
+            console.log("The dataURL has been collected.")
+            return self.postReport(reportID)
+        })
+       .then(function () {
+          window.open("http://localhost:8080/BIMPlus/outReport.docx");
+          self.collectedPicCode.splice(0, self.collectedPicCode.length)
+          console.log("The downloading of the report succeed!")
+       })
+       // .done(function () {
+       //  console.log("The downloading of the report succeeded.")
+       // })
+       // .fail(function () {
+       //  console.warn("The collection of dataURL fails.")
+       // })
+      } else {
+        console.warn("The length of the picList is wrong")
+      }
+     },
      showreport: function(picCode) {
+      // this.myChart1.clear();
+      // debugger
       this.myChart1.setOption(this.option1, true);
       let self = this; 
     return  jQuery.ajax({
@@ -283,6 +343,7 @@ export default {
     }
       self.collectedPicCode.push(self.myChart1.getDataURL());
       console.log("The " + picCode + " th has been collected.")
+      // self.myChart1.clear();
     },
     error: function () {
       console.warn("经济季报数据加载失败！")
