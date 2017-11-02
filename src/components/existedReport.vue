@@ -54,23 +54,23 @@
                 
 
 				<div class="input-field col s4" v-show="picCode == 100">
-					<textarea id="textarea0" class="materialize-textarea" data-length="120" v-model="text0"></textarea>
+					<textarea id="textarea0" class="materialize-textarea" :data-length="inputMax" v-model="text0"></textarea>
 					<label for="textarea0">Textarea0</label>
 				</div>
 				<div class="input-field col s4" v-show="picCode == 2">
-					<textarea id="textarea2" class="materialize-textarea" data-length="120" v-model="text2"></textarea>
+					<textarea id="textarea2" class="materialize-textarea" :data-length="inputMax" v-model="text2"></textarea>
 					<label for="textarea2">Textarea2</label>
 				</div>
 				<div class="input-field col s4" v-show="picCode == 5">
-					<textarea id="textarea5" class="materialize-textarea" data-length="120" v-model="text5"></textarea>
+					<textarea id="textarea5" class="materialize-textarea" :data-length="inputMax" v-model="text5"></textarea>
 					<label for="textarea5">Textarea5</label>
 				</div>
 				<div class="input-field col s4" v-show="picCode == 6">
-					<textarea id="textarea6" class="materialize-textarea" data-length="120" v-model="text6"></textarea>
+					<textarea id="textarea6" class="materialize-textarea" :data-length="inputMax" v-model="text6"></textarea>
 					<label for="textarea6">Textarea6</label>
 				</div>
 				<div class="input-field col s4" v-show="picCode == 7">
-					<textarea id="textarea7" class="materialize-textarea" data-length="120" v-model="text7"></textarea>
+					<textarea id="textarea7" class="materialize-textarea" :data-length="inputMax" v-model="text7"></textarea>
 					<label for="textarea7">Textarea7</label>
 				</div>
 			</div>
@@ -102,6 +102,7 @@
 			return {
 				myChart1: null,
 				picCode: 0,
+				inputMax: 1000,
 				text0: "",
 				text2: "",
 				text5: "",
