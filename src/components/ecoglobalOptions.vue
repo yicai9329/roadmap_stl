@@ -20,6 +20,7 @@
 import 'echarts/lib/chart/map'
 import 'echarts/map/js/china.js'
 import 'echarts/map/js/world.js'
+import prefixURL from '../globalUse/globalVar.js'
 export default {
   name: 'ecoglobal',
   data () {
@@ -162,7 +163,8 @@ export default {
       var self = this;
       jQuery.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/BIMPlus/stlObjcets.json',
+        url: prefixURL.devURL + 'stlObjcets.json',
+        // url: prefixURL.prodURL + 'stlObjcets.json',
         // data: jQuery("#ecoglobal").serialize(),
         data: {type: mapType},
         dataType: 'jsonp',

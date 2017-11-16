@@ -11,6 +11,7 @@
 <script>
 import 'echarts/lib/chart/map'
 import 'echarts/map/js/china.js'
+import prefixURL from '../globalUse/globalVar.js'
 export default {
   name: 'stlcompany',
   data () {
@@ -46,7 +47,8 @@ export default {
       let self = this;
       jQuery.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/BIMPlus/stlCompany.json',
+        url: prefixURL.devURL + 'stlCompany.json',
+        // url: prefixURL.prodURL + 'stlCompany.json',
         dataType: 'jsonp',
         jsonp: 'callback',
         success: function (json) {

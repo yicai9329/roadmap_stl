@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import prefixURL from '../globalUse/globalVar.js'
 export default {
   name: 'reportlist',
   data () {
@@ -186,7 +187,8 @@ export default {
        let self = this;
        jQuery.ajax({
          type: 'GET',
-         url: 'http://localhost:8080/BIMPlus/reportListReload.json',
+         url: prefixURL.devURL + 'reportListReload.json',
+         // url: prefixURL.prodURL + 'reportListReload.json',
          dataType: 'jsonp',
          jsonp: 'callback',
          success: function (json) {
@@ -205,7 +207,8 @@ export default {
       // console.log(this.collectedPicCode);
       return jQuery.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/BIMPlus/downloadReport.docx',
+        url: prefixURL.devURL + 'downloadReport.docx',
+        // url: prefixURL.prodURL + 'downloadReport.docx',
         data: {reportID: reportID, picsCode: JSON.stringify(this.collectedPicCode)},
         success: function() {
           console.log("Successfully post the images info code to the backend")
@@ -275,7 +278,8 @@ export default {
             return self.postReport(reportID)
         })
        .then(function () {
-          window.open("http://localhost:8080/BIMPlus/outReport.docx");
+          window.open( prefixURL.devURL + "outReport.docx");
+          // window.open( prefixURL.prodURL + "outReport.docx");
           self.collectedPicCode.splice(0, self.collectedPicCode.length)
           console.log("The downloading of the report succeed!")
        })
@@ -296,7 +300,8 @@ export default {
       let self = this; 
     return  jQuery.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+        url: prefixURL.devURL + 'seasonReport.json',
+        // url: prefixURL.prodURL + 'seasonReport.json',
     // data: jQuery("#reportlist").serialize(),
     // data: {graphCode: 6},
     data: {graphCode: picCode},

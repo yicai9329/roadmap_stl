@@ -6,13 +6,7 @@ import echarts from 'echarts'
 import jQuery from 'jquery'
 import VRouter from 'vue-router'
 
-import reportlist from './components/reportlist'
-import ecoreportOptions from './components/ecoreportOptions'
-import ecoglobal from './components/ecoglobalOptions'
-import divind from './components/divIndOptions'
-import stlcompany from './components/stlCompany'
-import newreport from './components/newReport'
-import existedReport from './components/existedReport'
+import indexRouter from './router/index.js'
 
 require("../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../node_modules/materialize-css/dist/js/materialize.js");
@@ -21,52 +15,13 @@ require("../node_modules/materialize-css/dist/js/materialize.js");
 Vue.prototype.$echarts = echarts 
 
 Vue.config.productionTip = false
-Vue.use(VRouter)
 
-let router = new VRouter({
-	mode: 'history',
-	routes: [
-	   {
-	   	path: '/',
-	   	redirect: '/ecoreport'
-	   },
-     {
-     	path: '/reportToBeDownloaded',
-     	component: reportlist
-     },
-     {
-     	path: '/ecoreport',
-     	component: ecoreportOptions
-     },
-     {
-     	path: '/ecoglobal',
-     	component: ecoglobal
-     },
-     {
-     	path: '/divInd',
-     	component: divind
-     },
-     {
-      path: '/stlCompnay',
-      component: stlcompany
-     },
-     {
-      path: '/newReport',
-      component: newreport
-     },
-     {
-      path: '/existedReport/:report_id',
-      name: 'existedReport',
-      component: existedReport,
-      props: true
-     }
-	]
-})
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
+  router: indexRouter,
   template: '<App/>',
   components: { App }
 })

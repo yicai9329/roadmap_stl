@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import prefixURL from '../globalUse/globalVar.js'
+
 	export default {
 		name: 'newreport',
 		watch: {
@@ -174,7 +176,8 @@
 			let self = this
 			jQuery.ajax({
 				type: 'POST',
-				url: 'http://localhost:8080/BIMPlus/newReportSave.json',
+				url: prefixURL.devURL + 'newReportSave.json',
+				// url: prefixURL.prodURL + 'newReportSave.json',
 				data: {nextID: self.nextReportID, text0: self.text0, text2: self.text2, text5: self.text5, text6: self.text6, text7: self.text7},
 				success: function () {
 					console.log("The " + self.nextReportID + " th " + " has been saved.");
@@ -190,7 +193,8 @@
 		let self = this; 
 		jQuery.ajax({
 		  type: 'GET',
-		  url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+		  url: prefixURL.devURL + 'seasonReport.json',
+		  // url: prefixURL.prodURL + 'seasonReport.json',
 		// data: jQuery("#reportlist").serialize(),
 		// data: {graphCode: 6},
 		data: {graphCode: picCode},

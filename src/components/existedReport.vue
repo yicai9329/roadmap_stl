@@ -8,6 +8,9 @@
 		<div class="col s2 push-s7">
 			<a class="waves-effect waves-light btn">提交</a>
 		</div>
+		<div class="col s2 push-s3">
+			<router-link :to="{path:'reportToBeDownloaded'}" class="waves-effect waves-light btn">返回报告列表</router-link>
+		</div>
 	</div>
 	<div class="row">
 
@@ -86,6 +89,7 @@
 </template>
 
 <script>
+    import prefixURL from '../globalUse/globalVar.js'
 	export default {
 		name: 'existedReport',
         props: ['report_id'],
@@ -174,7 +178,8 @@
 			let self = this
 			jQuery.ajax({
 				type: 'POST',
-				url: 'http://localhost:8080/BIMPlus/updateReport.json',
+				url: prefixURL.devURL + 'updateReport.json',
+				// url: prefixURL.prodURL + 'updateReport.json',
 				data: {update_id: self.report_id, text0: self.text0, text2: self.text2, text5: self.text5, text6: self.text6, text7: self.text7},
 				success: function () {
 					console.log("The " + self.report_id + " th " + " has been saved.");
@@ -188,7 +193,8 @@
 			let self = this
 			jQuery.ajax({
 				type: 'GET',
-				url: 'http://localhost:8080/BIMPlus/initExistedReport.json',
+				url: prefixURL.devURL + 'initExistedReport.json',
+				// url: prefixURL.prodURL + 'initExistedReport.json',
 				data: {report_id: report_id},
 				dataType: 'jsonp',
                 jsonp: 'callback',
@@ -221,7 +227,8 @@
 		let self = this; 
 		jQuery.ajax({
 		  type: 'GET',
-		  url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+		  url: prefixURL.devURL + 'seasonReport.json',
+		  // url: prefixURL.prodURL + 'seasonReport.json',
 		// data: jQuery("#reportlist").serialize(),
 		// data: {graphCode: 6},
 		data: {graphCode: picCode},

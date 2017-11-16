@@ -15,6 +15,7 @@
             <input type="radio" name="graphCode" value="2" id="table3" v-model="picCode"/><label for="table3">全球主要经济体PMI指数</label>
             <input type="radio" name="graphCode" value="4" id="table4" v-model="picCode"/><label for="table4">全球主要经济体贸易帐</label>
             <input type="radio" name="graphCode" value="5" id="table5" v-model="picCode"/><label for="table5">全球主要经济体汇率</label>
+            <input type="radio" name="graphCode" value="22" id="table22" v-model="picCode"/><label for="table22">全球主要经济体贸易出口增长率</label>
           </div>
           <div id="couandsea" v-else-if="disOption ==='couandsea'">
             <input type="radio" name="graphCode" value="6" id="table6" v-model="picCode"/><label for="table6">国内GDP季度增速</label>
@@ -33,6 +34,8 @@
             <input type="radio" name="graphCode" value="17" id="table17" v-model="picCode"/><label for="table17">大宗商品价格指数</label>
             <input type="radio" name="graphCode" value="18" id="table18" v-model="picCode"/><label for="table18">制造业分行业工业增加值增速</label>
             <input type="radio" name="graphCode" value="19" id="table19" v-model="picCode"/><label for="table19">制造业分行业固定资产投资增速</label>
+            <input type="radio" name="graphCode" value="20" id="table20" v-model="picCode"/><label for="table20">同业拆借隔夜利率</label>
+            <input type="radio" name="graphCode" value="21" id="table21" v-model="picCode"/><label for="table21">两市股指与两市融余</label>
           </div>
           <div id="errorOption" v-else>
             I should not appear, you made a wrong choice.
@@ -50,9 +53,8 @@
 </template>
 
 <script>
-// jQuery("#reportlist").change(function () {
-//   this.showreport();
-// });
+import prefixURL from '../globalUse/globalVar.js'
+
 export default {
   name: 'ecoreportOptions',
   data () {
@@ -146,7 +148,8 @@ export default {
     let self = this; 
     jQuery.ajax({
     type: 'GET',
-    url: 'http://localhost:8080/BIMPlus/seasonReport.json',
+    url: prefixURL.devURL + 'seasonReport.json',
+    // url: prefixURL.prodURL + 'seasonReport.json',
     // data: jQuery("#reportlist").serialize(),
     // data: {graphCode: 6},
     data: {graphCode: self.picCode},
