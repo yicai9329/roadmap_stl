@@ -8,6 +8,24 @@
 		<div class="col s2 push-s7">
 			<a class="waves-effect waves-light btn">提交</a>
 		</div>
+		<div class="col s2 push-s3">
+			<router-link :to="{path:'/reportToBeDownloaded'}" class="waves-effect waves-light btn">返回报告列表</router-link>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12" id="selectYearOptions">
+			<p>
+			  <input class="with-gap" value="2017" type="radio" id="yearOpt1" checked="checked" v-model="reportYear"/>
+			  <label for="yearOpt1">2017</label>
+			</p>
+			<p>
+			  <input class="with-gap" value="2016" type="radio" id="yearOpt2" v-model="reportYear"/>
+			  <label for="yearOpt2">2016</label>
+			</p>
+			<div class="col s3">
+				<span>Selected year: {{reportYear}}</span>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 
@@ -93,16 +111,20 @@ import prefixURL from '../globalUse/globalVar.js'
 		watch: {
 			picCode: function (newCode, oldCode) {
 				if(newCode != 100) {
-					this.showreport(newCode);
+					this.showreport(newCode, this.reportYear);
 				} else if (newCode == 100) {
 					this.myChart1.clear();
 				}
+			},
+			reportYear: function(newYear, oldYear) {
+				this.showreport(this.picCode, newYear);
 			}
 		},
 		data () {
 			return {
 				myChart1: null,
 				picCode: 0,
+				reportYear: "2017",
 				text0: "",
 				text2: "",
 				text5: "",
@@ -188,7 +210,7 @@ import prefixURL from '../globalUse/globalVar.js'
 			});
 			self.nextReportID += 1;
 		},
-		showreport: function(picCode) {
+		showreport: function(picCode, reportYear) {
 		this.myChart1.setOption(this.option1, true);
 		let self = this; 
 		jQuery.ajax({
@@ -197,7 +219,7 @@ import prefixURL from '../globalUse/globalVar.js'
 		  // url: prefixURL.prodURL + 'seasonReport.json',
 		// data: jQuery("#reportlist").serialize(),
 		// data: {graphCode: 6},
-		data: {graphCode: picCode},
+		data: {graphCode: picCode, reportYear: reportYear},
 		dataType: 'jsonp',
 		jsonp: 'callback',
 		success: function (json) {
