@@ -1,12 +1,14 @@
 <template>
   <div id="downReport">
     <div class="row">
-      <div class="col s2 offset-s10">
-        <br/>
-        <router-link :to="{path:'newReport'}"  class="waves-effect waves-light btn">创建报告</router-link>
-      </div>
+      <span class="col s2 offset-s10">
+        <router-link :to="{path:'/newReport'}"  class="waves-effect waves-light btn">创建报告</router-link>
+      </span>
+      <span class="col s2 offset-s7">
+        <router-link :to="{path:'/newReportLive'}" class="waves-effect waves-light btn">创建新报告</router-link>
+      </span>
     </div>
-    <div class="col s10" id="reportTable">
+    <div class="col s12" id="reportTable">
       <table class="striped bordered">
         <thead>
           <tr>

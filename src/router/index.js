@@ -9,6 +9,7 @@ import divind from '../components/divIndOptions'
 import stlcompany from '../components/stlCompany'
 import newreport from '../components/newReport'
 import existedReport from '../components/existedReport'
+import newReportLive from '../components/newReportLive'
 
 
 Vue.use(VRouter)
@@ -43,6 +44,10 @@ let router = new VRouter({
      {
       path: '/newReport',
       component: newreport
+     },
+     {
+      path: '/newReportLive',
+      component: newReportLive
      },
      {
       path: '/existedReport/:report_id',
