@@ -2,7 +2,7 @@
 	<div id="newReportLive">
 		<div id="reportInfo" class="col s12 card-panel cyan accent-2">
 			<span class="text-darken-2">类别: {{reportCategory}}</span><br />
-			<span class="text-darken-2">年月: {{reportDate}}</span><br />
+			<span class="text-darken-2">年月: {{initReportDate()}}</span><br />
 			<span class="text-darken-2">主题: {{reportTheme}}</span><br />
 			<a class="waves-effect waves-light btn">保存</a>
 			<a class="waves-effect waves-light btn">提交</a>
@@ -99,13 +99,13 @@
 		data () {
 			return {
 				reportCategory: '月报',
-				reportDate: '20171124',
 				reportTheme: '宏观经济研究月报2017年第10期'
 			}
 		},
 		methods: {
-			initForCollapse: function () {
-
+			initReportDate: function () {
+			  let my = new Date();
+              return my.getFullYear()+''+my.getMonth()+my.getDate();
 			}
 		},
 		mounted () {
