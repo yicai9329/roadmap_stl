@@ -80,14 +80,21 @@
 				<div id="reportTtileTwo" class="row">
 					<div id="reportTitleTwoAddOrDelete" class="col s2  lime lighten-4">
 						<span class="indigo-text darken-3">增加文本域</span>&nbsp;<a href="#!"><i class="material-icons">add</i></a> <br />
-						<span class="indigo-text darken-3">增加图片</span>&nbsp;<a href="#!"><i class="material-icons">add</i></a><br />
+						<span class="indigo-text darken-3">增加图片</span>&nbsp;<a href="#!" v-on:click="toggle"><i class="material-icons">add</i></a><br />
 						<span class="indigo-text darken-3">删掉文本域</span>&nbsp;<a href="#!"><i class="material-icons">cancel</i></a> <br />
-						<span class="indigo-text darken-3">删掉图片</span>&nbsp;<a href="#!"><i class="material-icons">cancel</i></a>
+						<span class="indigo-text darken-3">删掉图片</span>&nbsp;<a href="#!" v-on:click="closeTapTarget"><i class="material-icons">cancel</i></a>
 					</div>
 					<div id="reportTextAndImage" class="col s10  deep-orange lighten-5">
-                      
+
 					</div>
 				</div> 
+			</div>
+			<a id="menu" class="waves-effect waves-light btn btn-floating" ><i class="material-icons">menu</i></a>
+			<div class="tap-target" data-activates="menu">
+				<div class="tap-target-content">
+					<h5>Title</h5>
+					<p>A bunch of text</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -104,14 +111,25 @@
 		},
 		methods: {
 			initReportDate: function () {
-			  let my = new Date();
-              return my.getFullYear()+''+my.getMonth()+my.getDate();
+				let my = new Date();
+				return my.getFullYear()+''+my.getMonth()+my.getDate();
+			},
+			closeTapTarget: function () {
+				jQuery('.tap-target').tapTarget('close');
+			},
+			toggle: function () {
+				jQuery('.tap-target').tapTarget('open');
 			}
 		},
 		mounted () {
 			this.$nextTick(function () {
 				jQuery(document).ready(function(){
 					jQuery('.collapsible').collapsible();
+					// $('#menu').pushpin({
+					// 	top: 10,
+					// 	bottom: 10,
+					// 	offset: 0
+					// });
 				});
 			})
 			
@@ -121,8 +139,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
- #reportTitleOne {
- 	text-align: center;
- 	color: black;
- }
+	#reportTitleOne {
+		text-align: center;
+		color: black;
+	}
 </style>
