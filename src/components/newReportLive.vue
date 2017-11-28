@@ -91,9 +91,15 @@
 			</div>
 			<a id="menu" class="waves-effect waves-light btn btn-floating" ><i class="material-icons">menu</i></a>
 			<div class="tap-target" data-activates="menu">
-				<div class="tap-target-content">
-					<h5>Title</h5>
-					<p>A bunch of text</p>
+				<div id="graphSelectArea" class="tap-target-content">
+					<form id="graphSelectForm" action="#">
+						<template v-for="graphItem in graphItems">
+							<span v-bind:key="graphItem.key">
+								<input class="with-gap" name="group1" value="graphItem.code" type="radio" id="graphItem.key">
+								<label for="graphItem.key">{{graphItem.title}}</label>
+							</span><br />
+						</template>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -106,7 +112,29 @@
 		data () {
 			return {
 				reportCategory: '月报',
-				reportTheme: '宏观经济研究月报2017年第10期'
+				reportTheme: '宏观经济研究月报2017年第10期',
+				graphItems: [
+				{
+					key: "graph2",
+					code: 2,
+					title: "全球主要经济体PMI指数"
+				},
+				{
+					key: "graph4",
+					code: 4,
+					title: "全球主要经济体贸易账"
+				},
+				{
+					key: "graph5",
+					code: 5,
+					title: "全球主要经济体汇率图"
+				},
+				{
+					key: "graph6",
+					code: 6,
+					title: "国内GDP季度增速图"
+				}
+				]
 			}
 		},
 		methods: {
@@ -125,11 +153,6 @@
 			this.$nextTick(function () {
 				jQuery(document).ready(function(){
 					jQuery('.collapsible').collapsible();
-					// $('#menu').pushpin({
-					// 	top: 10,
-					// 	bottom: 10,
-					// 	offset: 0
-					// });
 				});
 			})
 			
@@ -140,6 +163,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 	#reportTitleOne {
+		text-align: center;
+		color: black;
+	}
+	#graphSelectArea {
 		text-align: center;
 		color: black;
 	}
