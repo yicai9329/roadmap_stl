@@ -216,15 +216,10 @@ import prefixURL from '../globalUse/globalVar.js'
 		jQuery.ajax({
 		  type: 'GET',
 		  url: prefixURL.devURL + 'seasonReport.json',
-		  // url: prefixURL.prodURL + 'seasonReport.json',
-		// data: jQuery("#reportlist").serialize(),
-		// data: {graphCode: 6},
 		data: {graphCode: picCode, reportYear: reportYear},
 		dataType: 'jsonp',
 		jsonp: 'callback',
 		success: function (json) {
-		// console.log(jQuery("#reportlist").serialize());
-
 		self.myChart1.setOption({
 			xAxis: {
 				data: json.xdata
