@@ -9,7 +9,7 @@
       </span>
     </div>
     <div class="col s12" id="reportTable">
-      <table class="striped bordered">
+      <table class="striped bordered cyan lighten-4">
         <thead>
           <tr>
             <th>序号</th>
@@ -77,7 +77,7 @@
               <td>{{item.createdate}}</td>
               <td>{{item.submitdate}}</td>
               <td></td>
-              <td><a id="download14" class="waves-effect waves-light btn" v-on:click="downloadReportSeq(item.key)">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
+              <td><a class="waves-effect waves-light btn" v-on:click="downloadReportSeq(item.key)">下载</a> <router-link :to="{name: 'existedReport', params: { report_id: item.key}}" class="waves-effect waves-light btn">编辑</router-link></td>
             </tr>
           </template>
         </tbody>
@@ -373,5 +373,8 @@ export default {
     margin-top:5px;
     height: 650px;
     width: 500px;
+  }
+  #reportTable {
+    border-style: double;
   }
 </style>
