@@ -14,6 +14,7 @@
       <li><a href="#!">宏观经济发展</a>
         <ul class="dropdown3">
           <li><a>关键指标</a></li>
+          <router-link :to="{path:'/docItemSelect'}" tag="li"><a>test1</a></router-link>
           <router-link :to="{path:'/ecoreport'}" tag="li"><a>经济季报</a></router-link>
           <router-link :to="{path:'/ecoglobal'}" tag="li"><a>全球经济</a></router-link>
         </ul>

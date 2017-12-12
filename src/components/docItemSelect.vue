@@ -1,13 +1,13 @@
 <template>
-	<div class="col s12" id="captionSelect">
+	<div class="col s3 green lighten-3" id="captionSelect">
 		<ul class="collapsible" data-collapsible="accordion">
-			<template v-for="captionItem in captionItems">
+			<template v-for="(captionItem, index) in captionItems">
 				<li :key="captionItem.captionI">
-					<div class="collapsible-header"><i class="material-icons">place</i>{{captionItem.captionI}}</div>
+					<div class="collapsible-header"><i class="material-icons">place</i>{{captionItem.captionI}}<button @click="captionItems.splice(index,1)">X</button></div>
 					<div class="collapsible-body">
-						<template v-for="subTitle in captionItem.children">
+						<template v-for="(subTitle, idx) in captionItem.children">
 							<ul class="collection" :key="subTitle.captionII">
-								<li class="collection-item"><a href="#!">{{subTitle.captionII}}</a></li>
+								<li class="collection-item"><a href="#!">{{subTitle.captionII}}<button @click="captionItem.children.splice(idx,1)">X</button></a></li>
 							</ul>
 						</template>
 					</div>
@@ -46,6 +46,9 @@
 	],
 }
 },
+props: {
+   reportID: Number
+},
 mounted () {
 	this.$nextTick(function () {
 		jQuery(document).ready(function(){
@@ -60,5 +63,11 @@ mounted () {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+	#captionSelect {
+		min-width: 20em;
+		min-height: 30em;
+		max-width: 22em;
+		max-height: 40em;
+		overflow: scroll;
+	}
 </style>

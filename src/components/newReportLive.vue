@@ -8,26 +8,8 @@
 			<a class="waves-effect waves-light btn">提交</a>
 		</div>
 		<div class="row" id="reportBody">
-			<div class="col s3 green lighten-3" id="captionSelectPanel">
-				<docItemSelect></docItemSelect>
-			</div>
-			<div class="col s9" id="reportContent">
-				<div id="reportTitleOne" class="col s9 offset-s3 card-panel blue lighten-3">
-					<label for="caption1">一级标题:</label><input placeholder="请输入一级标题" id="caption1" type="text" class="validate"><br />
-					<label for="caption2">二级标题:</label><input placeholder="请输入二级标题" id="caption2" type="text" class="validate">
-				</div>
-				<div id="reportTtileTwo" class="row">
-					<div id="reportTitleTwoAddOrDelete" class="col s2 lime lighten-4">
-						<span class="indigo-text darken-3">增加文本域</span>&nbsp;<a href="#!"><i class="material-icons">add</i></a> <br />
-						<span class="indigo-text darken-3">增加图片</span>&nbsp;<a class="waves-effect waves-light btn-small modal-trigger" data-target="modal1">Modal</a><br />
-						<span class="indigo-text darken-3">删掉文本域</span>&nbsp;<a href="#!"><i class="material-icons">cancel</i></a> <br />
-						<span class="indigo-text darken-3">删掉图片</span>&nbsp;<a href="#!"><i class="material-icons">cancel</i></a>
-					</div>
-					<div id="reportTextAndImage" class="col s9 offset-s1 deep-orange lighten-5">
-
-					</div>
-				</div> 
-			</div>
+			<docItemSelect :reportID="reportID"></docItemSelect>
+			<docItemContent></docItemContent>
 			<div id="modal1" class="modal bottom-sheet">
 				<div class="modal-content">
 					<h4>图片选择列表</h4>
@@ -53,6 +35,7 @@
 
 <script>
 	import docItemSelect from './docItemSelect'
+	import docItemContent from './docItemContent'
 	export default {
 		name: 'newReportLive',
 		data () {
@@ -61,9 +44,6 @@
 				reportTheme: '宏观经济研究月报2017年第10期',
 				selectedGraphCode: 0,
 				reportID: 5,
-				components: {
-					docItemSelect
-				},
 				graphItems: [
 				{
 					key: "graph2",
@@ -163,6 +143,10 @@
 				]
 			}
 		},
+		components: {
+			docItemSelect,
+			docItemContent
+		},
 		methods: {
 			initReportDate: function () {
 				let my = new Date();
@@ -197,11 +181,5 @@
 	#reportTextAndImage {
 		border-style: outset;
 	}
-	#captionSelectPanel {
-		min-width: 20em;
-		min-height: 30em;
-		max-width: 22em;
-		max-height: 40em;
-		overflow: scroll;
-	}
+	
 </style>
