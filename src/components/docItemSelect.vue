@@ -1,13 +1,13 @@
 <template>
 	<div class="col s3 green lighten-3" id="captionSelect">
 		<ul class="collapsible" data-collapsible="accordion">
-			<template v-for="(captionItem, index) in captionItems">
+			<template v-for="(captionItem, indexI) in captionItems">
 				<li :key="captionItem.captionI">
-					<div class="collapsible-header"><i class="material-icons">place</i>{{captionItem.captionI}}<button @click="captionItems.splice(index,1)">X</button></div>
+					<div class="collapsible-header"><button @click="captionIUpOne(indexI)">up</button><button @click="captionIDownOne(indexI)">down</button><i class="material-icons">place</i>{{captionItem.captionI}}<button @click="removeCaptionItemI(indexI)">X</button></div>
 					<div class="collapsible-body">
-						<template v-for="(subTitle, idx) in captionItem.children">
+						<template v-for="(subTitle, indexII) in captionItem.children">
 							<ul class="collection" :key="subTitle.captionII">
-								<li class="collection-item"><a href="#!">{{subTitle.captionII}}<button @click="captionItem.children.splice(idx,1)">X</button></a></li>
+								<li class="collection-item"><button @click="captionIIUpOne(indexI,indexII)">up</button><button @click="captionIIDownOne(indexI,indexII)">down</button><a href="#!">{{subTitle.captionII}}<button @click="removeCaptionItemII(indexI,indexII)">X</button></a></li>
 							</ul>
 						</template>
 					</div>
@@ -26,39 +26,41 @@
 </template>
 
 <script>
+	import {mapState, mapActions} from 'vuex'
 	export default {
 		name: 'docItemSelect',
 		data () {
 			return {
-				captionItems: [
-				{ captionI: "报告摘要" , reportID: this.reportID,
-				children:[ {captionII: "全球经济形势的整体判断"}, {captionII: "国内经济形势的整体判断"} ]
-			},                                                                                                              
-			{ captionI: "全球经济发展趋势", reportID: this.reportID,
-			children:[{captionII: "全球经济保持回暖态势，美欧中制造业景气达近年高点"}, {captionII: "全球贸易出口增势强劲，贸易失衡依然严重"}, {captionII: "前三季美元疲软，欧、日元和人民币走势强劲"}]
+			}
 		},
-		{captionI: "产业经济分析", reportID: this.reportID,
-		children:[{captionII: "大宗商品价格冲高回落，钢铁价格领头"},{captionII: "钢铁效益明显回升，通信、计算机、仪器仪表与汽车产业领增"}]
-	},
-	{captionI: "结论及建议", reportID: this.reportID, children:[
-	{captionII: "整体结论及趋势预测"}
-	]}                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-	],
-}
-},
-props: {
-   reportID: Number
-},
-mounted () {
-	this.$nextTick(function () {
-		jQuery(document).ready(function(){
-			jQuery('.collapsible').collapsible();
-			jQuery('.modal').modal();
-		});
-	})
+		computed: {
+			...mapState({
+				captionItems: state => state.docItemSelect.captionItems
+			}),
+		},
+		methods: {
+			...mapActions([
+				'removeCaptionItemI',
+				'removeCaptionItemII',
+				'captionIUpOne',
+				'captionIDownOne',
+				'captionIIUpOne',
+				'captionIIDownOne'
+				]),
+		},
+		props: {
+			reportID: Number
+		},
+		mounted () {
+			this.$nextTick(function () {
+				jQuery(document).ready(function(){
+					jQuery('.collapsible').collapsible();
+					jQuery('.modal').modal();
+				});
+			})
 
-}
-}
+		}
+	}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
