@@ -28,7 +28,8 @@
 				<label for="new_captionI">新增一级标题</label>
 			</div>
 			<div class="modal-footer">
-				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="addCaptionI">确认</a>
+				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="addCaptionI(newCaptionI)">确认</a>
+				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="clearCaptionI()">取消</a>
 			</div>
 		</div>
 	</div>
@@ -40,12 +41,12 @@
 		name: 'docItemSelect',
 		data () {
 			return {
+				newCaptionI: ""
 			}
 		},
 		computed: {
 			...mapState({
 				captionItems: state => state.docItemSelect.captionItems,
-				newCaptionI: state => state.docItemSelect.newCaptionI
 			}),
 		},
 		methods: {
@@ -58,6 +59,9 @@
 				'captionIIDownOne',
 				'addCaptionI'
 				]),
+			clearCaptionI: function() {
+				this.newCaptionI = "";
+			}
 		},
 		props: {
 			reportID: Number

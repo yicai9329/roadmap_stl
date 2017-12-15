@@ -12,8 +12,7 @@ children:[{captionII: "大宗商品价格冲高回落，钢铁价格领头"},{ca
 {captionI: "结论及建议",  children:[
 {captionII: "整体结论及趋势预测"}
 ]}                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-],
-newCaptionI: ""
+]
 }
 
 var swapItems = function(arr, index1, index2) {
@@ -43,8 +42,8 @@ const actions = {
 	captionIIDownOne({commit}, [indexI, indexII]){
 		commit('captionIIDownOne', [indexI, indexII])
 	},
-	addCaptionI({commit}){
-		commit('addCaptionI')
+	addCaptionI({commit}, newCaptionI){
+		commit('addCaptionI', {newCaptionI})
 	}
 }
 
@@ -79,12 +78,10 @@ const mutations = {
 		}
 		swapItems(state.captionItems[indexI].children, indexII, indexII+1);
 	},
-	addCaptionI(state){
-		console.log("The new title is " + state.newCaptionI);
-		let newTitle = state.newCaptionI;
-		let newCaptionItem = {captionI: newTitle, children:[]};
+	addCaptionI(state, {newCaptionI}){
+		console.log("The new title is " + newCaptionI);
+		let newCaptionItem = {captionI: newCaptionI, children:[]};
 		state.captionItems.push(newCaptionItem);
-		// state.newCaptionI =  "";
 	}
 }
 
