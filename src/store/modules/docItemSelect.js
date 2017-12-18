@@ -73,7 +73,7 @@ const mutations = {
 		swapItems(state.captionItems, indexI, indexI+1);
 	},
 	captionIIDownOne(state, [indexI,indexII]){
-		if(indexII === state.captionItems[indexI].length-1){
+		if(indexII === state.captionItems[indexI].children.length-1){
 			return;
 		}
 		swapItems(state.captionItems[indexI].children, indexII, indexII+1);

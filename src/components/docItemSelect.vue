@@ -19,7 +19,7 @@
 			<span class="deep-purple-text darken-4">减去一级标题</span>&nbsp;<a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">cancel</i></a>
 		</div>
 		<div class="row" id="addButtonForCaptionTwo">
-			<span class="deep-purple-text darken-4">增加二级标题</span>&nbsp;<a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+			<span class="deep-purple-text darken-4">增加二级标题</span>&nbsp;<a class="btn-floating btn-small waves-effect waves-light red modal-trigger" href="#modal66"><i class="material-icons">add</i></a>
 			<span class="deep-purple-text darken-4">减少二级标题</span>&nbsp;<a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">cancel</i></a>
 		</div>
 		<div id="modal33" class="modal">
@@ -29,7 +29,17 @@
 			</div>
 			<div class="modal-footer">
 				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="addCaptionI(newCaptionI)">确认</a>
-				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="clearCaptionI()">取消</a>
+				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="clearNewCaptionI()">取消</a>
+			</div>
+		</div>
+		<div id="modal66" class="modal">
+			<div class="modal-content">
+				<input placeholder="二级标题" id="new_captionII" type="text" v-model="newCaptionII">
+				<label for="new_captionII">新增二级标题</label>
+			</div>
+			<div class="modal-footer">
+				<a class="modal-action modal-close waves-effect waves-green btn-flat">确认</a>
+				<a class="modal-action modal-close waves-effect waves-green btn-flat" @click="clearNewCaptionII()">取消</a>
 			</div>
 		</div>
 	</div>
@@ -41,7 +51,8 @@
 		name: 'docItemSelect',
 		data () {
 			return {
-				newCaptionI: ""
+				newCaptionI: "",
+				newCaptionII: ""
 			}
 		},
 		computed: {
@@ -59,8 +70,11 @@
 				'captionIIDownOne',
 				'addCaptionI'
 				]),
-			clearCaptionI: function() {
+			clearNewCaptionI: function() {
 				this.newCaptionI = "";
+			},
+			clearNewCaptionII: function() {
+				this.newCaptionII = "";
 			}
 		},
 		props: {
